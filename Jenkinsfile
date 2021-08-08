@@ -15,6 +15,10 @@ node() {
             echo 'Building Docker Image'
             sh 'docker build . -t hello-app:${BUILD_NUMBER}'
         }
+        stage('Deploy application'){
+            echo 'Running Container'
+            sh 'docker run -p 80:8080 --name hello-app hello-app:${BUILD_NUMBER}'
+        }
         
     }
 }
