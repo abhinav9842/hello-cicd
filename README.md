@@ -6,7 +6,7 @@ This repo contains a simple hello-world java application around which a ci-cd pi
 
 All the tools as well as the application is hosted on a GCP virtual machine, the steps to login to the vm have been shared over the mail.
 
-There is a [tools.sh]() script present inside the ci-cd stack directory which pretty much installs and configures all the tools necessary for the pipeline. This script can be used to configure tools on a fresh vm.
+There is a [tools.sh](https://github.com/abhinav9842/hello-cicd/blob/main/ci-cd-stack/tools.sh) script present inside the ci-cd stack directory which pretty much installs and configures all the tools necessary for the pipeline. This script can be used to configure tools on a fresh vm.
 
 ## Application
 The application is a simple hello-world app which is written in java. This app is currently deployed on the VM and you can [click here](http://34.131.24.68/) to view the hosted app.
