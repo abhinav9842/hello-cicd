@@ -12,7 +12,8 @@ node() {
             junit 'target/surefire-reports/*.xml'
         }
         stage('Build DockerImage'){
-
+            echo 'Building Docker Image'
+            sh 'docker build . -t hello-app:${BUILD_NUMBER}'
         }
         
     }
