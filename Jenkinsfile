@@ -2,6 +2,7 @@ node() {
     timeout(unit: 'SECONDS', time: 3600) {
         stage('Building jar file') {
             properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '7', numToKeepStr: '10')), pipelineTriggers([githubPush()])])
+            checkout scm
             echo 'Packaging the jar'
             sh 'mvn -DskipTests clean package'
         }
@@ -9,6 +10,9 @@ node() {
             echo 'Executing unit tests'
             sh 'mvn test'
             junit 'target/surefire-reports/*.xml'
+        }
+        stage('Build DockerImage'){
+
         }
         
     }
