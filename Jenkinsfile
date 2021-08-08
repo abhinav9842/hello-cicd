@@ -15,9 +15,18 @@ node() {
             echo 'Building Docker Image'
             sh 'docker build . -t hello-app:${BUILD_NUMBER}'
         }
+        stage('Uploading docker image to Nexus repo'){
+            echo 'Uploading image to Nexus'
+            withCredentials([usernamePassword(credentialsId: 'docker-login', passwordVariable: 'password', usernameVariable: 'username')]) {
+                sh ''' docker login -u $username -p $password  34.131.24.68:8082
+                    docker tag hello-app:${BUILD_NUMBER} 34.131.24.68:8082/repository/docker-repo/hello-app:${BUILD_NUMBER}
+                    docker push 34.131.24.68:8082/repository/docker-repo/hello-app:${BUILD_NUMBER} '''
+            }            
+        }
         stage('Deploy application'){
             echo 'Running Container'
-            sh 'docker run -p 80:8080 --name hello-app hello-app:${BUILD_NUMBER}'
+            sh '''docker stop hello-app || true && docker rm hello-app || true
+                docker run -p 80:8080 --name hello-app -d 34.131.24.68:8082/repository/docker-repo/hello-app:${BUILD_NUMBER}'''
         }
         
     }
