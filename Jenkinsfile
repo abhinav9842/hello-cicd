@@ -15,6 +15,15 @@ node() {
             echo 'Building Docker Image'
             sh 'docker build . -t hello-app:${BUILD_NUMBER}'
         }
+        stage('Scan DockerImage'){
+            withCredentials([usernamePassword(credentialsId: 'docker-login', passwordVariable: 'password', usernameVariable: 'username')]){
+            echo 'Uploading docker image to staging repo for scanning'
+            sh '''docker build . -t hello-app:${BUILD_NUMBER}
+                    docker login -u $username -p $password  34.131.24.68:8083
+                    docker tag hello-app:${BUILD_NUMBER} 34.131.24.68:8083/repository/staging-docker-repo/hello-app:${BUILD_NUMBER}
+                    docker push 34.131.24.68:8083/repository/staging-docker-repo/hello-app:${BUILD_NUMBER}'''
+            }
+        }
         stage('Uploading docker image to Nexus repo'){
             echo 'Uploading image to Nexus'
             withCredentials([usernamePassword(credentialsId: 'docker-login', passwordVariable: 'password', usernameVariable: 'username')]) {
