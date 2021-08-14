@@ -24,7 +24,7 @@ node() {
                     docker push 34.131.24.68:8083/repository/staging-docker-repo/hello-app:${BUILD_NUMBER}'''
             def imageLine = "34.131.24.68:8083/repository/staging-docker-repo/hello-app:${BUILD_NUMBER}"
             writeFile file: 'anchore_images', text: imageLine
-            anchore name: 'anchore_images', engineCredentialsId: 'anchore-auth', bailOnFail: false
+            anchore name: 'anchore_images', engineCredentialsId: 'anchore-auth', bailOnFail: true
             }
         }
         stage('Uploading docker image to Nexus repo'){
