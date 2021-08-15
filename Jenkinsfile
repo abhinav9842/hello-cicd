@@ -6,9 +6,12 @@ node() {
             echo 'Packaging the jar'
             sh 'mvn -DskipTests clean package'
         }
-        stage('Unit testing'){
+        try {   
+            stage('Unit testing'){
             echo 'Executing unit tests'
-            sh 'mvn test'
+            sh 'mvn test'                
+            }
+        } finally {
             junit 'target/surefire-reports/*.xml'
         }
         stage('Build DockerImage'){
@@ -37,7 +40,7 @@ node() {
         }
         stage('Deploy application to kubernetes'){
             echo 'Modifying Deployment'
-            sh '''kubectl set image deploy hello-cicd-deploy hello-cicd=34.131.24.68:8082/repository/docker-repo/hello-app:${BUILD_NUMBER}'''
+            sh '''kubectl set image deploy hello-cicd-deploy hello-cicd=34.131.24.68:8082/repository/docker-repo/hello-app:${BUILD_NUMBER} --record'''
         }
         
     }
