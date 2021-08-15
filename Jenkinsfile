@@ -35,10 +35,9 @@ node() {
                     docker push 34.131.24.68:8082/repository/docker-repo/hello-app:${BUILD_NUMBER} '''
             }            
         }
-        stage('Deploy application'){
-            echo 'Running Container'
-            sh '''docker stop hello-app || true && docker rm hello-app || true
-                docker run -p 80:8080 --name hello-app -d 34.131.24.68:8082/repository/docker-repo/hello-app:${BUILD_NUMBER}'''
+        stage('Deploy application to kubernetes'){
+            echo 'Modifying Deployment'
+            sh '''kubectl set image deploy hello-cicd-deploy hello-cicd=34.131.24.68:8082/repository/docker-repo/hello-app:${BUILD_NUMBER}'''
         }
         
     }
