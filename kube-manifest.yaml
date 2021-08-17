@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-cicd-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-cicd
+  template:
+    metadata:
+      name: hello-cicd
+      labels:
+        app: hello-cicd
+    spec:
+      containers:
+        - name: hello-cicd
+          image: 34.131.24.68:8082/repository/docker-repo/hello-app:29
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-cicd-svc
+spec:
+  selector:
+    app: hello-cicd
+  type: NodePort
+  ports:
+    - targetPort: 8080
+      port: 80
