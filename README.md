@@ -9,7 +9,12 @@ All the tools as well as the application is hosted on a GCP virtual machine, the
 There is a [tools.sh](https://github.com/abhinav9842/hello-cicd/blob/main/ci-cd-stack/tools.sh) script present inside the ci-cd stack directory which pretty much installs and configures all the tools necessary for the pipeline. This script can be used to configure tools on a fresh vm.
 
 ## Application
-The application is a simple hello-world app which is written in java. This app is currently deployed on the VM and you can [click here](http://34.131.24.68/) to view the hosted app.
+The application is a simple hello-world app which is written in java. This app is currently deployed on a kubernetes cluster and exposed via NodePort you can [click here](http://35.200.152.152:31412/) to view the hosted app.
+
+## Kubernetes
+I have setup a 3 node kubernetes cluster to deploy the application. The cluster has one master node and 2 worker node. Its a unmanaged cluster created via Kubeadm.
+![GCP-VM](images/GCP-VM.PNG) 
+![kubernetes-nodes](images/kube-nodes.PNG)
 
 ## Pipeline
 I have used **jenkins** to create the ci-cd pipeline, the scripted code is present in [Jenkinsfile](https://github.com/abhinav9842/hello-cicd/blob/main/Jenkinsfile). The pipeline can be manually triggered as well as a webhook is also configured so whenever someone checks in the code the job runs automatically.
