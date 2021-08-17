@@ -9,7 +9,7 @@ All the tools as well as the application is hosted on a GCP virtual machine, the
 There is a [tools.sh](https://github.com/abhinav9842/hello-cicd/blob/main/ci-cd-stack/tools.sh) script present inside the ci-cd stack directory which pretty much installs and configures all the tools necessary for the pipeline. This script can be used to configure tools on a fresh vm.
 
 ## Application
-The application is a simple hello-world app which is written in java. This app is currently deployed on a kubernetes cluster and exposed via NodePort you can [click here](http://35.200.152.152:31523/) to view the hosted app.
+The application is a simple hello-world app which is written in java. This app is currently deployed on a kubernetes cluster and exposed via NodePort you can [click here](http://35.200.152.152:32552/) to view the hosted app.
 
 ## Kubernetes
 I have setup a 3 node kubernetes cluster to deploy the application. The cluster has one master node and 2 worker node. Its a unmanaged cluster created via Kubeadm.
